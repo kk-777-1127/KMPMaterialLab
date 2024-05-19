@@ -76,7 +76,7 @@ actual fun FadingHorizontalMultiBrowseCarouselSample(
     HorizontalMultiBrowseCarousel(
         state = state,
         modifier = Modifier
-            .width(412.dp)
+            .widthIn(412.dp)
             .height(221.dp),
         preferredItemWidth = 186.dp,
         itemSpacing = 8.dp,
@@ -187,8 +187,8 @@ actual fun HorizontalUncontainedCarouselSample(
     HorizontalUncontainedCarousel(
         state = rememberCarouselState { items.count() },
         modifier = Modifier
-            .width(412.dp)
-            .height(221.dp),
+            .widthIn(412.dp)
+            .heightIn(221.dp),
         itemWidth = 186.dp,
         itemSpacing = 8.dp,
         contentPadding = PaddingValues(horizontal = 16.dp)
