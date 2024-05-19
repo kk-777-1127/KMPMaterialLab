@@ -72,15 +72,25 @@ kotlin {
             implementation(libs.koin)
             implementation(libs.androidx.material3.adaptive)
 
+            implementation(libs.androidx.compose.material3)
+
             implementation(libs.androidx.datastore)
         }
         iosMain.dependencies {
             implementation(libs.androidx.datastore)
         }
+
+        val wasmJsMain by getting
+        wasmJsMain.dependencies {
+
+        }
+
         val desktopMain by getting
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.androidx.datastore)
+            implementation(libs.androidx.compose.foundation)
+            implementation(libs.androidx.compose.material3)
         }
     }
 }

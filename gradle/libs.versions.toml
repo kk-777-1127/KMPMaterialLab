@@ -6,8 +6,8 @@ android-targetSdk = "34"
 androidx-activityCompose = "1.9.0"
 compose = "1.6.7"
 # https://github.com/JetBrains/compose-multiplatform/releases/tag/v1.6.10-rc01
-compose-plugin = "1.6.10-rc01"
-viewModel = "2.8.0-rc01"
+compose-plugin = "1.6.10-rc03"
+viewModel = "2.8.0-rc03"
 # https://github.com/JetBrains/compose-multiplatform/releases/tag/v1.6.10-beta03
 kotlin-androidx-navigation = "2.7.0-alpha04"
 datastore = "1.1.1"
@@ -30,14 +30,18 @@ koin = { module = "io.insert-koin:koin-core", version = "3.6.0-alpha3" }
 # Not supported wasmJs
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
-# androidMain
+# Not supported wasmJs & iosMain
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version = "1.3.0-beta01" }
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version = "1.7.0-beta01"  }
+
+# Only androidMain
 androidx-material3-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", version = "1.0.0-alpha12" }
 
-# native ( iosMain )
+# Only native ( iosMain )
 
-# jvm ( desktopMain )
+# Only jvm ( desktopMain )
 
-# js
+# Only js
 
 
 

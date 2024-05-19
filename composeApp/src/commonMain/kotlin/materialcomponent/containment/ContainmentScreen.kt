@@ -27,6 +27,7 @@ fun ContainmentScreen(
                     )
                 }
             )
+            carousel()
         }
     }
 }
