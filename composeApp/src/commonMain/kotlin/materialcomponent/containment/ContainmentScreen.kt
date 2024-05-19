@@ -30,6 +30,7 @@ fun ContainmentScreen(
             carousel()
             dialogs()
             listItem()
+            sideSheet()
         }
     }
 }
