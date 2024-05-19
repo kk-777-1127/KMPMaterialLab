@@ -28,6 +28,7 @@ fun ContainmentScreen(
                 }
             )
             carousel()
+            dialogs()
         }
     }
 }
