@@ -49,7 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import materialcomponent.common.BorderBox
-import navigation.NavigationRoots
+import navigation.Containment
 
 fun LazyListScope.bottomSheets(navController: NavController) {
     item {
@@ -61,10 +61,10 @@ fun LazyListScope.bottomSheets(navController: NavController) {
                 modifier = Modifier.padding(12.dp)
             ) {
                 ModalBottomSheetSample()
-                Button(onClick = { navController.navigate(NavigationRoots.Containment.BottomSheetScaffoldNav().root) }) {
+                Button(onClick = { navController.navigate(Containment.BottomSheetScaffoldNav().root) }) {
                     Text("Show Scaffold BottomSheet")
                 }
-                Button(onClick = { navController.navigate(NavigationRoots.Containment.NestedBottomSheetScaffold().root) }) {
+                Button(onClick = { navController.navigate(Containment.NestedBottomSheetScaffold().root) }) {
                     Text("Show Nested Scaffold BottomSheet")
                 }
             }
