@@ -21,6 +21,7 @@ import materialcomponent.communication.CommunicationScreen
 import materialcomponent.containment.BottomSheetScaffoldNestedScrollSample
 import materialcomponent.containment.ContainmentScreen
 import materialcomponent.containment.SimpleBottomSheetScaffoldSample
+import materialcomponent.navigation.ExitAlwaysBottomAppBarScreen
 import materialcomponent.navigation.NavigationScreen
 import materialcomponent.selection.SelectionScreen
 import materialcomponent.textinputs.TextInputsScreen
@@ -99,11 +100,35 @@ data class Communication(override val root: String = "/communication"): RootNavi
     }
 }
 
-data class Navigation(override val root: String = "/navigation"): RootNavigation {
-    @Composable
-    override fun Content(navController: NavController) {
-        NavigationScreen()
+data class Navigation(
+    override val root: String = "/navigation",
+    override val children: List<AppNavigation> = listOf(BottomAppBarScreen())
+): NestedNavigation {
+
+    data class BottomAppBarScreen(
+        override val root: String = "/navigation/bottomAppBar/",
+        override val children: List<AppNavigation> = listOf(Root(), ExitBottomBarSample())
+    ): NestedNavigation {
+
+        data class Root(
+            override val root: String = "/navigation/bottomAppBar/root"
+        ): RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                NavigationScreen(navController)
+            }
+        }
+
+        data class ExitBottomBarSample(
+            override val root: String = "/navigation/bottomAppBar/exitBottomBar"
+        ): RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                ExitAlwaysBottomAppBarScreen(navController)
+            }
+        }
     }
+
 }
 data class Selection(override val root: String = "/selection"): RootNavigation {
     @Composable
