@@ -28,12 +28,15 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,12 +50,14 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import materialcomponent.common.BorderBox
 import navigation.Containment
 
 fun LazyListScope.bottomSheets(navController: NavController) {
     item {
+        LaunchedEffect(Unit) { println("表示されたよ") }
         BorderBox(
             modifier = Modifier,
             label = "ModalBottomSheet"
@@ -66,6 +71,9 @@ fun LazyListScope.bottomSheets(navController: NavController) {
                 }
                 Button(onClick = { navController.navigate(Containment.NestedBottomSheetScaffold().root) }) {
                     Text("Show Nested Scaffold BottomSheet")
+                }
+                Button(onClick = { navController.navigate(Containment.BottomSheetAsNestedScreen().root) }) {
+                    Text("Show BottomSheetAsScreen")
                 }
             }
         }
@@ -267,5 +275,150 @@ fun BottomSheetScaffoldNestedScrollSample(navController: NavController) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun BottomSheetAsScreenComposable(
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(Unit) {
+        delay(1000)
+        sheetState.show()
+    }
+    ModalBottomSheet(
+        onDismissRequest = {
+            navController.popBackStack()
+        },
+        dragHandle = {},
+        sheetState = sheetState,
+        modifier = Modifier.fillMaxSize().padding(top = 90.dp)
+    ) {
+        // Sheet content
+        Button(onClick = {
+            scope.launch { sheetState.hide() }.invokeOnCompletion {
+                if (!sheetState.isVisible) {
+                    navController.popBackStack()
+                }
+            }
+        }) {
+            Text("Hide bottom sheet")
+        }
+
+        Button(onClick = {
+            scope.launch {
+                navController.navigate(Containment.BottomSheetAsNestedScreen.BottomSheetAsScreen2().root)
+            }
+        }) {
+            Text("Next")
+        }
+    }
+}
+
+@Composable
+fun BottomSheetAsScreenComposable2(
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(Unit) {
+        delay(1000)
+        sheetState.show()
+    }
+    ModalBottomSheet(
+        onDismissRequest = {
+            navController.popBackStack()
+        },
+        dragHandle = {},
+        sheetState = sheetState,
+        modifier = Modifier.fillMaxSize().padding(top = 90.dp)
+    ) {
+        // Sheet content
+        Button(onClick = {
+            scope.launch { sheetState.hide() }.invokeOnCompletion {
+                if (!sheetState.isVisible) {
+                    navController.popBackStack()
+                }
+            }
+        }) {
+            Text("Hide bottom sheet")
+        }
+
+        Button(onClick = {
+            scope.launch {
+                navController.navigate(Containment.BottomSheetAsNestedScreen.BottomSheetAsScreen2().root)
+            }
+        }) {
+            Text("Next")
+        }
+    }
+}
+
+@Composable
+private fun BottomSheetScaffoldContent(navController: NavController) {
+    // hide でも常に下に表示されていることが前提っぽいScaffold
+    val scope = rememberCoroutineScope()
+    val scaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = rememberStandardBottomSheetState(
+            initialValue = SheetValue.Expanded,
+            skipHiddenState = false
+        )
+    )
+
+    LaunchedEffect(Unit) {
+        delay(1000)
+    }
+
+    BottomSheetScaffold(
+        sheetDragHandle = {},
+        sheetContent = {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Button(
+                    // Note: If you provide logic outside of onDismissRequest to remove the sheet,
+                    // you must additionally handle intended state cleanup, if any.
+                    onClick = {
+                        scope.launch {
+                            scaffoldState.bottomSheetState.hide()
+                            navController.popBackStack()
+                        }
+                    }
+                ) {
+                    Text("Hide Bottom Sheet")
+                }
+            }
+            var text by remember { mutableStateOf("") }
+            OutlinedTextField(
+                value = text,
+                onValueChange = { text = it },
+                modifier = Modifier.padding(horizontal = 16.dp),
+                label = { Text("Text field") }
+            )
+            LazyColumn {
+                items(25) {
+                    ListItem(
+                        headlineContent = { Text("Item $it") },
+                        leadingContent = {
+                            Icon(
+                                Icons.Default.Favorite,
+                                contentDescription = "Localized description"
+                            )
+                        },
+                        colors = ListItemDefaults.colors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                        ),
+                    )
+                }
+            }
+        },
+        scaffoldState = scaffoldState
+    ) {
     }
 }

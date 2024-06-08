@@ -13,11 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.navigation
 import materialcomponent.communication.CommunicationScreen
+import materialcomponent.containment.BottomSheetAsScreenComposable
 import materialcomponent.containment.BottomSheetScaffoldNestedScrollSample
 import materialcomponent.containment.ContainmentScreen
 import materialcomponent.containment.SimpleBottomSheetScaffoldSample
@@ -28,6 +31,8 @@ import materialcomponent.textinputs.TextInputsScreen
 
 sealed interface AppNavigation {
     val root: String
+    val isBottomSheet: Boolean
+        get() = false
 }
 
 sealed interface RootNavigation: AppNavigation {
@@ -42,13 +47,25 @@ sealed interface NestedNavigation: AppNavigation {
 
 fun NavGraphBuilder.createGraph(navController: NavController, navigation: AppNavigation) {
     when (navigation) {
-        is RootNavigation -> createRouteGraph(navController, navigation)
+        is RootNavigation -> when (navigation.isBottomSheet) {
+            true -> createBottomSheet(navController, navigation)
+            else -> createRouteGraph(navController, navigation)
+        }
         is NestedNavigation -> createNestedGraph(navController, navigation)
     }
 }
 
 private fun NavGraphBuilder.createRouteGraph(navController: NavController, rootNavigation: RootNavigation) {
     composable(route = rootNavigation.root) { rootNavigation.Content(navController) }
+}
+
+private fun NavGraphBuilder.createBottomSheet(navController: NavController, rootNavigation: RootNavigation) {
+    dialog(
+        route = rootNavigation.root,
+        dialogProperties = DialogProperties(
+            usePlatformDefaultWidth = false
+        )
+    ) { rootNavigation.Content(navController) }
 }
 
 private fun NavGraphBuilder.createNestedGraph(navController: NavController, nestedNavigation: NestedNavigation) {
@@ -145,7 +162,12 @@ data class TextInputs(override val root: String = "/textinputs"): RootNavigation
 
 data class Containment(
     override val root: String = "/containment",
-    override val children: List<AppNavigation> = listOf(ContainmentRoot(), BottomSheetScaffoldNav(), NestedBottomSheetScaffold())
+    override val children: List<AppNavigation> = listOf(
+        ContainmentRoot(),
+        BottomSheetScaffoldNav(),
+        NestedBottomSheetScaffold(),
+        BottomSheetAsNestedScreen(),
+    )
 ): NestedNavigation {
     data class ContainmentRoot(override val root: String = "/containment/root"): RootNavigation {
         @Composable
@@ -167,6 +189,35 @@ data class Containment(
             BottomSheetScaffoldNestedScrollSample(navController)
         }
     }
+
+    data class BottomSheetAsNestedScreen(
+        override val root: String = "/communication/bottomsheetasscreen",
+        override val children: List<AppNavigation> = listOf(
+            BottomSheetAsScreen(),
+            BottomSheetAsScreen2()
+        )
+    ): NestedNavigation {
+
+        data class BottomSheetAsScreen(
+            override val root: String = "/communication/bottomsheetasscreen/1",
+            override val isBottomSheet: Boolean = true
+        ): RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                BottomSheetAsScreenComposable(navController)
+            }
+        }
+
+        data class BottomSheetAsScreen2(
+            override val root: String = "/communication/bottomsheetasscreen/2",
+        ): RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                BottomSheetAsScreenComposable(navController)
+            }
+        }
+    }
+
 }
 
 fun getRoots(): List<AppNavigation> = listOf(
