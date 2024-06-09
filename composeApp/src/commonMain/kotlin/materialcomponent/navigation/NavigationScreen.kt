@@ -23,6 +23,7 @@ fun NavigationScreen(
     ) {
         LazyColumn {
             bottomAppBar(onClick, navController)
+            navigationBarOrRail(onClick, navController)
         }
     }
 }

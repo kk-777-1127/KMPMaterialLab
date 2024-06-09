@@ -25,6 +25,7 @@ import materialcomponent.containment.BottomSheetScaffoldNestedScrollSample
 import materialcomponent.containment.ContainmentScreen
 import materialcomponent.containment.SimpleBottomSheetScaffoldSample
 import materialcomponent.navigation.ExitAlwaysBottomAppBarScreen
+import materialcomponent.navigation.NavigationRailScreen
 import materialcomponent.navigation.NavigationScreen
 import materialcomponent.selection.SelectionScreen
 import materialcomponent.textinputs.TextInputsScreen
@@ -119,22 +120,26 @@ data class Communication(override val root: String = "/communication"): RootNavi
 
 data class Navigation(
     override val root: String = "/navigation",
-    override val children: List<AppNavigation> = listOf(BottomAppBarScreen())
+    override val children: List<AppNavigation> = listOf(
+        Root(),
+        BottomAppBarScreens(),
+        NavigationBarScreens()
+    )
 ): NestedNavigation {
 
-    data class BottomAppBarScreen(
-        override val root: String = "/navigation/bottomAppBar/",
-        override val children: List<AppNavigation> = listOf(Root(), ExitBottomBarSample())
-    ): NestedNavigation {
-
-        data class Root(
-            override val root: String = "/navigation/bottomAppBar/root"
-        ): RootNavigation {
-            @Composable
-            override fun Content(navController: NavController) {
-                NavigationScreen(navController)
-            }
+    data class Root(
+        override val root: String = "/navigation/root"
+    ): RootNavigation {
+        @Composable
+        override fun Content(navController: NavController) {
+            NavigationScreen(navController)
         }
+    }
+
+    data class BottomAppBarScreens(
+        override val root: String = "/navigation/bottomAppBar/",
+        override val children: List<AppNavigation> = listOf(ExitBottomBarSample())
+    ): NestedNavigation {
 
         data class ExitBottomBarSample(
             override val root: String = "/navigation/bottomAppBar/exitBottomBar"
@@ -142,6 +147,23 @@ data class Navigation(
             @Composable
             override fun Content(navController: NavController) {
                 ExitAlwaysBottomAppBarScreen(navController)
+            }
+        }
+    }
+
+    data class NavigationBarScreens(
+        override val root: String = "/navigation/navigationBar/",
+        override val children: List<AppNavigation> = listOf(
+            NavigationRails()
+        )
+    ): NestedNavigation {
+
+        data class NavigationRails(
+            override val root: String = "/navigation/navigationBar/rails"
+        ): RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                NavigationRailScreen(navController)
             }
         }
     }

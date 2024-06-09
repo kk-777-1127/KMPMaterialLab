@@ -45,7 +45,7 @@ fun LazyListScope.bottomAppBar(onClick: (String) -> Unit, navController: NavCont
             ) {
                 SimpleBottomAppBar(onClick)
                 BottomAppBarWithFAB(onClick)
-                Button(onClick = { navController.navigate(Navigation.BottomAppBarScreen.ExitBottomBarSample().root) }) {
+                Button(onClick = { navController.navigate(Navigation.BottomAppBarScreens.ExitBottomBarSample().root) }) {
                     Text("ExitAlwaysBottomAppBar")
                 }
             }
