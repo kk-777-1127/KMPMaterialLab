@@ -25,13 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import materialcomponent.common.BorderBox
 
-fun LazyListScope.progressIndicators(
-    modifier: Modifier = Modifier,
-) {
+fun LazyListScope.progressIndicators(modifier: Modifier = Modifier) {
     item {
         BorderBox(
             modifier = modifier,
-            label = "progressIndicator"
+            label = "progressIndicator",
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth().padding(12.dp),
@@ -40,7 +38,7 @@ fun LazyListScope.progressIndicators(
                 var progress by remember { mutableStateOf(0.1f) }
                 val animatedProgress by animateFloatAsState(
                     targetValue = progress,
-                    animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+                    animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
                 )
                 Row {
                     Text("Set progress: ")
@@ -67,15 +65,12 @@ fun LazyListScope.progressIndicators(
 }
 
 @Composable
-fun LinearProgressIndicatorSample(
-    animatedProgress: Float,
-) {
+fun LinearProgressIndicatorSample(animatedProgress: Float) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         LinearProgressIndicator(
             progress = { animatedProgress },
         )
         Spacer(Modifier.requiredHeight(30.dp))
-
     }
 }
 
@@ -87,9 +82,7 @@ fun IndeterminateLinearProgressIndicatorSample() {
 }
 
 @Composable
-fun CircularProgressIndicatorSample(
-    animatedProgress: Float,
-) {
+fun CircularProgressIndicatorSample(animatedProgress: Float) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         CircularProgressIndicator(progress = { animatedProgress })
         Spacer(Modifier.requiredHeight(30.dp))

@@ -13,7 +13,7 @@ fun LazyListScope.snackBar(
     item {
         BorderBox(
             modifier = modifier,
-            label = "snackBar"
+            label = "snackBar",
         ) {
             Button(onClick = onClickButton) {
                 Text("showSnackBar")

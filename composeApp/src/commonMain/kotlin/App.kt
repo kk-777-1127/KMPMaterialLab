@@ -8,9 +8,7 @@ import navigation.getRoots
 import theme.AppTheme
 
 @Composable
-fun App(
-    windowSize: WindowSize
-) {
+fun App(windowSize: WindowSize) {
     /*
     TODO
         設定画面から seed colorを変える術を考える
@@ -21,7 +19,7 @@ fun App(
             val navController = rememberNavController()
             NavHost(
                 navController = navController,
-                startDestination = getAppRoot().root
+                startDestination = getAppRoot().root,
             ) {
                 getRoots().forEach { navigation ->
                     createGraph(navController, navigation)

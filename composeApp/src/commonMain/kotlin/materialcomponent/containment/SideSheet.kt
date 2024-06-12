@@ -12,7 +12,7 @@ fun LazyListScope.sideSheet(
     item {
         BorderBox(
             modifier = modifier,
-            label = "SideSheet"
+            label = "SideSheet",
         ) {
             Text("Planed")
         }

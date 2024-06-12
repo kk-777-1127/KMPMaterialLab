@@ -35,13 +35,16 @@ import materialcomponent.SnackBarState
 import materialcomponent.common.BorderBox
 import navigation.Navigation
 
-fun LazyListScope.bottomAppBar(onClick: (String) -> Unit, navController: NavController) {
+fun LazyListScope.bottomAppBar(
+    onClick: (String) -> Unit,
+    navController: NavController,
+) {
     item {
         BorderBox(
-            label = "BottomAppBar"
+            label = "BottomAppBar",
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 SimpleBottomAppBar(onClick)
                 BottomAppBarWithFAB(onClick)
@@ -53,24 +56,19 @@ fun LazyListScope.bottomAppBar(onClick: (String) -> Unit, navController: NavCont
     }
 }
 
-
 @Composable
-fun SimpleBottomAppBar(
-    onClick: (String) -> Unit = {},
-) {
+fun SimpleBottomAppBar(onClick: (String) -> Unit = {}) {
     BottomAppBar(
         actions = {
             IconButton(onClick = { onClick("menu") }) {
                 Icon(Icons.Filled.Menu, contentDescription = "Localized description")
             }
-        }
+        },
     )
 }
 
 @Composable
-fun BottomAppBarWithFAB(
-    onClick: (String) -> Unit = {},
-) {
+fun BottomAppBarWithFAB(onClick: (String) -> Unit = {}) {
     BottomAppBar(
         actions = {
             IconButton(onClick = { onClick("check") }) {
@@ -87,35 +85,31 @@ fun BottomAppBarWithFAB(
             FloatingActionButton(
                 onClick = { onClick("add") },
                 containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
             ) {
                 Icon(Icons.Filled.Add, "Localized description")
             }
-        }
+        },
     )
 }
 
 @Composable
-fun ExitAlwaysBottomAppBarScreen(
-    navController: NavController
-) {
+fun ExitAlwaysBottomAppBarScreen(navController: NavController) {
     val snackBarState = remember { mutableStateOf<SnackBarState?>(null) }
     val onClick: (String) -> Unit = { message ->
-        snackBarState.value = SnackBarState(message = message )
+        snackBarState.value = SnackBarState(message = message)
     }
     AppScaffold(
         title = "Navigation",
         snackBarState = snackBarState.value,
-        onBack = { navController.popBackStack() }
+        onBack = { navController.popBackStack() },
     ) {
         ExitAlwaysBottomAppBar(onClick)
     }
 }
 
 @Composable
-private fun ExitAlwaysBottomAppBar(
-    onClick: (String) -> Unit = {},
-) {
+private fun ExitAlwaysBottomAppBar(onClick: (String) -> Unit = {}) {
     val scrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior()
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -129,7 +123,7 @@ private fun ExitAlwaysBottomAppBar(
                         Icon(Icons.Filled.Edit, contentDescription = "Localized description")
                     }
                 },
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
             )
         },
         floatingActionButton = {
@@ -137,7 +131,7 @@ private fun ExitAlwaysBottomAppBar(
                 modifier = Modifier.offset(y = 4.dp),
                 onClick = { onClick("add") },
                 containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
             ) {
                 Icon(Icons.Filled.Add, "Localized description")
             }
@@ -146,17 +140,17 @@ private fun ExitAlwaysBottomAppBar(
         content = { innerPadding ->
             LazyColumn(
                 contentPadding = innerPadding,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 val list = (0..75).map { it.toString() }
                 items(count = list.size) {
                     Text(
                         text = list[it],
                         style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                     )
                 }
             }
-        }
+        },
     )
 }

@@ -21,12 +21,16 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.compose.navigation
 import materialcomponent.communication.CommunicationScreen
 import materialcomponent.containment.BottomSheetAsScreenComposable
+import materialcomponent.containment.BottomSheetAsScreenComposable2
 import materialcomponent.containment.BottomSheetScaffoldNestedScrollSample
 import materialcomponent.containment.ContainmentScreen
 import materialcomponent.containment.SimpleBottomSheetScaffoldSample
+import materialcomponent.navigation.DismissibleNavigationDrawerSample
 import materialcomponent.navigation.ExitAlwaysBottomAppBarScreen
+import materialcomponent.navigation.ModalNavigationDrawerSample
 import materialcomponent.navigation.NavigationRailScreen
 import materialcomponent.navigation.NavigationScreen
+import materialcomponent.navigation.PermanentNavigationDrawerSample
 import materialcomponent.selection.SelectionScreen
 import materialcomponent.textinputs.TextInputsScreen
 
@@ -36,43 +40,56 @@ sealed interface AppNavigation {
         get() = false
 }
 
-sealed interface RootNavigation: AppNavigation {
+sealed interface RootNavigation : AppNavigation {
     @Composable
     fun Content(navController: NavController)
 }
 
-sealed interface NestedNavigation: AppNavigation {
+sealed interface NestedNavigation : AppNavigation {
     val children: List<AppNavigation>
 }
 
-
-fun NavGraphBuilder.createGraph(navController: NavController, navigation: AppNavigation) {
+fun NavGraphBuilder.createGraph(
+    navController: NavController,
+    navigation: AppNavigation,
+) {
     when (navigation) {
-        is RootNavigation -> when (navigation.isBottomSheet) {
-            true -> createBottomSheet(navController, navigation)
-            else -> createRouteGraph(navController, navigation)
-        }
+        is RootNavigation ->
+            when (navigation.isBottomSheet) {
+                true -> createBottomSheet(navController, navigation)
+                else -> createRouteGraph(navController, navigation)
+            }
         is NestedNavigation -> createNestedGraph(navController, navigation)
     }
 }
 
-private fun NavGraphBuilder.createRouteGraph(navController: NavController, rootNavigation: RootNavigation) {
+private fun NavGraphBuilder.createRouteGraph(
+    navController: NavController,
+    rootNavigation: RootNavigation,
+) {
     composable(route = rootNavigation.root) { rootNavigation.Content(navController) }
 }
 
-private fun NavGraphBuilder.createBottomSheet(navController: NavController, rootNavigation: RootNavigation) {
+private fun NavGraphBuilder.createBottomSheet(
+    navController: NavController,
+    rootNavigation: RootNavigation,
+) {
     dialog(
         route = rootNavigation.root,
-        dialogProperties = DialogProperties(
-            usePlatformDefaultWidth = false
-        )
+        dialogProperties =
+            DialogProperties(
+                usePlatformDefaultWidth = false,
+            ),
     ) { rootNavigation.Content(navController) }
 }
 
-private fun NavGraphBuilder.createNestedGraph(navController: NavController, nestedNavigation: NestedNavigation) {
+private fun NavGraphBuilder.createNestedGraph(
+    navController: NavController,
+    nestedNavigation: NestedNavigation,
+) {
     navigation(
         startDestination = nestedNavigation.children.first().root, // TODO ここは指定できるようにする？
-        route = nestedNavigation.root
+        route = nestedNavigation.root,
     ) {
         nestedNavigation.children.forEach { navigation ->
             createGraph(navController, navigation)
@@ -80,8 +97,7 @@ private fun NavGraphBuilder.createNestedGraph(navController: NavController, nest
     }
 }
 
-
-data class AppRoot(override val root: String = "/"): RootNavigation {
+data class AppRoot(override val root: String = "/") : RootNavigation {
     @Composable
     override fun Content(navController: NavController) {
         Surface {
@@ -89,13 +105,13 @@ data class AppRoot(override val root: String = "/"): RootNavigation {
                 FlowRow(
                     modifier = Modifier.align(Alignment.Center),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     getRoots().filter { it !is AppRoot }.forEach {
                         Button(
                             onClick = { navController.navigate(it.root) },
                         ) {
-                            Text(it.root.removePrefix("/").replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() } )
+                            Text(it.root.removePrefix("/").replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() })
                         }
                     }
                 }
@@ -104,32 +120,93 @@ data class AppRoot(override val root: String = "/"): RootNavigation {
     }
 }
 
-data class Action(override val root: String = "/action"): RootNavigation {
+data class Action(override val root: String = "/action") : RootNavigation {
     @Composable
     override fun Content(navController: NavController) {
         ActionScreen(navController)
     }
 }
 
-data class Communication(override val root: String = "/communication"): RootNavigation {
+data class Communication(override val root: String = "/communication") : RootNavigation {
     @Composable
     override fun Content(navController: NavController) {
         CommunicationScreen(navController)
     }
 }
 
+data class Containment(
+    override val root: String = "/containment",
+    override val children: List<AppNavigation> =
+        listOf(
+            ContainmentRoot(),
+            BottomSheetScaffoldNav(),
+            NestedBottomSheetScaffold(),
+            BottomSheetAsNestedScreen(),
+        ),
+) : NestedNavigation {
+    data class ContainmentRoot(override val root: String = "/containment/root") : RootNavigation {
+        @Composable
+        override fun Content(navController: NavController) {
+            ContainmentScreen(navController)
+        }
+    }
+
+    data class BottomSheetScaffoldNav(override val root: String = "/communication/bottomsheetscaffold") : RootNavigation {
+        @Composable
+        override fun Content(navController: NavController) {
+            SimpleBottomSheetScaffoldSample(navController)
+        }
+    }
+
+    data class NestedBottomSheetScaffold(override val root: String = "/communication/nestedbottomsheetscaffold") : RootNavigation {
+        @Composable
+        override fun Content(navController: NavController) {
+            BottomSheetScaffoldNestedScrollSample(navController)
+        }
+    }
+
+    data class BottomSheetAsNestedScreen(
+        override val root: String = "/communication/bottomsheetasscreen",
+        override val children: List<AppNavigation> =
+            listOf(
+                BottomSheetAsScreen(),
+                BottomSheetAsScreen2(),
+            ),
+    ) : NestedNavigation {
+        data class BottomSheetAsScreen(
+            override val root: String = "/communication/bottomsheetasscreen/1",
+            override val isBottomSheet: Boolean = true,
+        ) : RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                BottomSheetAsScreenComposable(navController)
+            }
+        }
+
+        data class BottomSheetAsScreen2(
+            override val root: String = "/communication/bottomsheetasscreen/2",
+        ) : RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                BottomSheetAsScreenComposable2(navController)
+            }
+        }
+    }
+}
+
 data class Navigation(
     override val root: String = "/navigation",
-    override val children: List<AppNavigation> = listOf(
-        Root(),
-        BottomAppBarScreens(),
-        NavigationBarScreens()
-    )
-): NestedNavigation {
-
+    override val children: List<AppNavigation> =
+        listOf(
+            Root(),
+            BottomAppBarScreens(),
+            NavigationBarScreens(),
+            DrawerNestedScreen()
+        ),
+) : NestedNavigation {
     data class Root(
-        override val root: String = "/navigation/root"
-    ): RootNavigation {
+        override val root: String = "/navigation/root",
+    ) : RootNavigation {
         @Composable
         override fun Content(navController: NavController) {
             NavigationScreen(navController)
@@ -138,12 +215,11 @@ data class Navigation(
 
     data class BottomAppBarScreens(
         override val root: String = "/navigation/bottomAppBar/",
-        override val children: List<AppNavigation> = listOf(ExitBottomBarSample())
-    ): NestedNavigation {
-
+        override val children: List<AppNavigation> = listOf(ExitBottomBarSample()),
+    ) : NestedNavigation {
         data class ExitBottomBarSample(
-            override val root: String = "/navigation/bottomAppBar/exitBottomBar"
-        ): RootNavigation {
+            override val root: String = "/navigation/bottomAppBar/exitBottomBar",
+        ) : RootNavigation {
             @Composable
             override fun Content(navController: NavController) {
                 ExitAlwaysBottomAppBarScreen(navController)
@@ -153,14 +229,14 @@ data class Navigation(
 
     data class NavigationBarScreens(
         override val root: String = "/navigation/navigationBar/",
-        override val children: List<AppNavigation> = listOf(
-            NavigationRails()
-        )
-    ): NestedNavigation {
-
+        override val children: List<AppNavigation> =
+            listOf(
+                NavigationRails(),
+            ),
+    ) : NestedNavigation {
         data class NavigationRails(
-            override val root: String = "/navigation/navigationBar/rails"
-        ): RootNavigation {
+            override val root: String = "/navigation/navigationBar/rails",
+        ) : RootNavigation {
             @Composable
             override fun Content(navController: NavController) {
                 NavigationRailScreen(navController)
@@ -168,82 +244,68 @@ data class Navigation(
         }
     }
 
+    data class DrawerNestedScreen(
+        override val root: String = "/communication/drawer/",
+        override val children: List<AppNavigation> =
+            listOf(
+                Normal(),
+                Permanent(),
+                Dismissible(),
+            ),
+    ) : NestedNavigation {
+
+        data class Normal(
+            override val root: String = "/communication/drawer/normal",
+        ) : RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                ModalNavigationDrawerSample(navController)
+            }
+        }
+
+        data class Permanent(
+            override val root: String = "/communication/drawer/permanent",
+        ) : RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                PermanentNavigationDrawerSample(navController)
+            }
+        }
+
+        data class Dismissible(
+            override val root: String = "/communication/drawer/dismissible",
+        ) : RootNavigation {
+            @Composable
+            override fun Content(navController: NavController) {
+                DismissibleNavigationDrawerSample(navController)
+            }
+        }
+    }
 }
-data class Selection(override val root: String = "/selection"): RootNavigation {
+
+data class Selection(override val root: String = "/selection") : RootNavigation {
     @Composable
     override fun Content(navController: NavController) {
         SelectionScreen()
     }
 }
-data class TextInputs(override val root: String = "/textinputs"): RootNavigation {
+
+data class TextInputs(override val root: String = "/textinputs") : RootNavigation {
     @Composable
     override fun Content(navController: NavController) {
         TextInputsScreen()
     }
 }
 
-data class Containment(
-    override val root: String = "/containment",
-    override val children: List<AppNavigation> = listOf(
-        ContainmentRoot(),
-        BottomSheetScaffoldNav(),
-        NestedBottomSheetScaffold(),
-        BottomSheetAsNestedScreen(),
+fun getRoots(): List<AppNavigation> =
+    listOf(
+        AppRoot(),
+        Action(),
+        Communication(),
+        Containment(),
+        Navigation(),
+        Selection(),
+        TextInputs(),
     )
-): NestedNavigation {
-    data class ContainmentRoot(override val root: String = "/containment/root"): RootNavigation {
-        @Composable
-        override fun Content(navController: NavController) {
-            ContainmentScreen(navController)
-        }
-    }
-
-    data class BottomSheetScaffoldNav(override val root: String = "/communication/bottomsheetscaffold"): RootNavigation {
-        @Composable
-        override fun Content(navController: NavController) {
-            SimpleBottomSheetScaffoldSample(navController)
-        }
-    }
-
-    data class NestedBottomSheetScaffold(override val root: String = "/communication/nestedbottomsheetscaffold"): RootNavigation {
-        @Composable
-        override fun Content(navController: NavController) {
-            BottomSheetScaffoldNestedScrollSample(navController)
-        }
-    }
-
-    data class BottomSheetAsNestedScreen(
-        override val root: String = "/communication/bottomsheetasscreen",
-        override val children: List<AppNavigation> = listOf(
-            BottomSheetAsScreen(),
-            BottomSheetAsScreen2()
-        )
-    ): NestedNavigation {
-
-        data class BottomSheetAsScreen(
-            override val root: String = "/communication/bottomsheetasscreen/1",
-            override val isBottomSheet: Boolean = true
-        ): RootNavigation {
-            @Composable
-            override fun Content(navController: NavController) {
-                BottomSheetAsScreenComposable(navController)
-            }
-        }
-
-        data class BottomSheetAsScreen2(
-            override val root: String = "/communication/bottomsheetasscreen/2",
-        ): RootNavigation {
-            @Composable
-            override fun Content(navController: NavController) {
-                BottomSheetAsScreenComposable(navController)
-            }
-        }
-    }
-
-}
-
-fun getRoots(): List<AppNavigation> = listOf(
-    AppRoot(), Action(), Communication(), Containment(), Navigation(), Selection(), TextInputs()
-)
 
 fun getAppRoot(): AppNavigation = AppRoot()

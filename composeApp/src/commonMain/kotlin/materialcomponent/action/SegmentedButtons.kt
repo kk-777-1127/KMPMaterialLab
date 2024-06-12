@@ -26,18 +26,16 @@ import androidx.compose.ui.unit.dp
 import materialcomponent.common.BorderBox
 import materialcomponent.common.LabelBox
 
-fun LazyListScope.segmentedButtons(
-    modifier: Modifier = Modifier,
-) {
+fun LazyListScope.segmentedButtons(modifier: Modifier = Modifier) {
     item {
         BorderBox(
             modifier = modifier,
-            label = "SegmentedButtons"
+            label = "SegmentedButtons",
         ) {
             FlowRow(
                 modifier = Modifier.padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 LabelBox("SegmentedButtonSingleSelect") {
                     SegmentedButtonSingleSelectSample()
@@ -60,7 +58,7 @@ fun SegmentedButtonSingleSelectSample() {
             SegmentedButton(
                 shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                 onClick = { selectedIndex = index },
-                selected = index == selectedIndex
+                selected = index == selectedIndex,
             ) {
                 Text(label)
             }
@@ -72,11 +70,12 @@ fun SegmentedButtonSingleSelectSample() {
 fun SegmentedButtonMultiSelectSample() {
     val checkedList = remember { mutableStateListOf<Int>() }
     val options = listOf("Favorites", "Trending", "Saved")
-    val icons = listOf(
-        Icons.Filled.StarBorder,
-        Icons.AutoMirrored.Filled.TrendingUp,
-        Icons.Filled.BookmarkBorder
-    )
+    val icons =
+        listOf(
+            Icons.Filled.StarBorder,
+            Icons.AutoMirrored.Filled.TrendingUp,
+            Icons.Filled.BookmarkBorder,
+        )
     MultiChoiceSegmentedButtonRow {
         options.forEachIndexed { index, label ->
             SegmentedButton(
@@ -86,7 +85,7 @@ fun SegmentedButtonMultiSelectSample() {
                         Icon(
                             imageVector = icons[index],
                             contentDescription = null,
-                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
                         )
                     }
                 },
@@ -97,7 +96,7 @@ fun SegmentedButtonMultiSelectSample() {
                         checkedList.add(index)
                     }
                 },
-                checked = index in checkedList
+                checked = index in checkedList,
             ) {
                 Text(label)
             }

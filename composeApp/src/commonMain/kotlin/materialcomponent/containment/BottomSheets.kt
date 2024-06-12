@@ -60,10 +60,10 @@ fun LazyListScope.bottomSheets(navController: NavController) {
         LaunchedEffect(Unit) { println("表示されたよ") }
         BorderBox(
             modifier = Modifier,
-            label = "ModalBottomSheet"
+            label = "ModalBottomSheet",
         ) {
             Column(
-                modifier = Modifier.padding(12.dp)
+                modifier = Modifier.padding(12.dp),
             ) {
                 ModalBottomSheetSample()
                 Button(onClick = { navController.navigate(Containment.BottomSheetScaffoldNav().root) }) {
@@ -80,20 +80,20 @@ fun LazyListScope.bottomSheets(navController: NavController) {
     }
 }
 
-
 @Composable
 fun ModalBottomSheetSample() {
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = skipPartiallyExpanded
-    )
+    val bottomSheetState =
+        rememberModalBottomSheetState(
+            skipPartiallyExpanded = skipPartiallyExpanded,
+        )
 
     // App content
     Column(
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Row {
             Button(
@@ -105,8 +105,8 @@ fun ModalBottomSheetSample() {
                 Modifier.toggleable(
                     value = skipPartiallyExpanded,
                     role = Role.Checkbox,
-                    onValueChange = { checked -> skipPartiallyExpanded = checked }
-                )
+                    onValueChange = { checked -> skipPartiallyExpanded = checked },
+                ),
             ) {
                 Checkbox(checked = skipPartiallyExpanded, onCheckedChange = null)
                 Spacer(Modifier.width(16.dp))
@@ -117,7 +117,6 @@ fun ModalBottomSheetSample() {
 
     // Sheet content
     if (openBottomSheet) {
-
         ModalBottomSheet(
             onDismissRequest = { openBottomSheet = false },
             sheetState = bottomSheetState,
@@ -132,7 +131,7 @@ fun ModalBottomSheetSample() {
                                 openBottomSheet = false
                             }
                         }
-                    }
+                    },
                 ) {
                     Text("Hide Bottom Sheet")
                 }
@@ -142,7 +141,7 @@ fun ModalBottomSheetSample() {
                 value = text,
                 onValueChange = { text = it },
                 modifier = Modifier.padding(horizontal = 16.dp),
-                label = { Text("Text field") }
+                label = { Text("Text field") },
             )
             LazyColumn {
                 items(25) {
@@ -151,12 +150,13 @@ fun ModalBottomSheetSample() {
                         leadingContent = {
                             Icon(
                                 Icons.Default.Favorite,
-                                contentDescription = "Localized description"
+                                contentDescription = "Localized description",
                             )
                         },
-                        colors = ListItemDefaults.colors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                        ),
+                        colors =
+                            ListItemDefaults.colors(
+                                containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                            ),
                     )
                 }
             }
@@ -172,13 +172,13 @@ fun SimpleBottomSheetScaffoldSample(navController: NavController) {
 
     BottomSheetScaffold(
         topBar = {
-             TopAppBar(
+            TopAppBar(
                 title = { Text("Bottom sheet scaffold") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Localized description")
                     }
-                }
+                },
             )
         },
         scaffoldState = scaffoldState,
@@ -186,13 +186,13 @@ fun SimpleBottomSheetScaffoldSample(navController: NavController) {
         sheetContent = {
             Column(
                 Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Box(
                     Modifier
                         .fillMaxWidth()
                         .height(128.dp),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     Text("Swipe up to expand sheet")
                 }
@@ -201,17 +201,19 @@ fun SimpleBottomSheetScaffoldSample(navController: NavController) {
                     modifier = Modifier.padding(bottom = 64.dp),
                     onClick = {
                         scope.launch { scaffoldState.bottomSheetState.partialExpand() }
-                    }
+                    },
                 ) {
                     Text("Click to collapse sheet")
                 }
             }
-        }) { innerPadding ->
+        },
+    ) { innerPadding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+            contentAlignment = Alignment.Center,
         ) {
             Text("Scaffold Content")
         }
@@ -221,13 +223,14 @@ fun SimpleBottomSheetScaffoldSample(navController: NavController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheetScaffoldNestedScrollSample(navController: NavController) {
-    val colors = listOf(
-        Color(0xFFffd7d7.toInt()),
-        Color(0xFFffe9d6.toInt()),
-        Color(0xFFfffbd0.toInt()),
-        Color(0xFFe3ffd9.toInt()),
-        Color(0xFFd0fff8.toInt())
-    )
+    val colors =
+        listOf(
+            Color(0xFFffd7d7.toInt()),
+            Color(0xFFffe9d6.toInt()),
+            Color(0xFFfffbd0.toInt()),
+            Color(0xFFe3ffd9.toInt()),
+            Color(0xFFd0fff8.toInt()),
+        )
 
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -242,12 +245,13 @@ fun BottomSheetScaffoldNestedScrollSample(navController: NavController) {
                         leadingContent = {
                             Icon(
                                 Icons.Default.Favorite,
-                                contentDescription = "Localized description"
+                                contentDescription = "Localized description",
                             )
                         },
-                        colors = ListItemDefaults.colors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                        ),
+                        colors =
+                            ListItemDefaults.colors(
+                                containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                            ),
                     )
                 }
             }
@@ -261,7 +265,7 @@ fun BottomSheetScaffoldNestedScrollSample(navController: NavController) {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Localized description")
                     }
-                }
+                },
             )
         },
     ) { innerPadding ->
@@ -271,7 +275,7 @@ fun BottomSheetScaffoldNestedScrollSample(navController: NavController) {
                     Modifier
                         .fillMaxWidth()
                         .height(50.dp)
-                        .background(colors[it % colors.size])
+                        .background(colors[it % colors.size]),
                 )
             }
         }
@@ -281,11 +285,12 @@ fun BottomSheetScaffoldNestedScrollSample(navController: NavController) {
 @Composable
 fun BottomSheetAsScreenComposable(
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
-    )
+    val sheetState =
+        rememberModalBottomSheetState(
+            skipPartiallyExpanded = true,
+        )
     val scope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         delay(1000)
@@ -297,7 +302,7 @@ fun BottomSheetAsScreenComposable(
         },
         dragHandle = {},
         sheetState = sheetState,
-        modifier = Modifier.fillMaxSize().padding(top = 90.dp)
+        modifier = Modifier.fillMaxSize().padding(top = 90.dp),
     ) {
         // Sheet content
         Button(onClick = {
@@ -323,11 +328,12 @@ fun BottomSheetAsScreenComposable(
 @Composable
 fun BottomSheetAsScreenComposable2(
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
-    )
+    val sheetState =
+        rememberModalBottomSheetState(
+            skipPartiallyExpanded = true,
+        )
     val scope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         delay(1000)
@@ -339,7 +345,7 @@ fun BottomSheetAsScreenComposable2(
         },
         dragHandle = {},
         sheetState = sheetState,
-        modifier = Modifier.fillMaxSize().padding(top = 90.dp)
+        modifier = Modifier.fillMaxSize().padding(top = 90.dp),
     ) {
         // Sheet content
         Button(onClick = {
@@ -366,12 +372,14 @@ fun BottomSheetAsScreenComposable2(
 private fun BottomSheetScaffoldContent(navController: NavController) {
     // hide でも常に下に表示されていることが前提っぽいScaffold
     val scope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = rememberStandardBottomSheetState(
-            initialValue = SheetValue.Expanded,
-            skipHiddenState = false
+    val scaffoldState =
+        rememberBottomSheetScaffoldState(
+            bottomSheetState =
+                rememberStandardBottomSheetState(
+                    initialValue = SheetValue.Expanded,
+                    skipHiddenState = false,
+                ),
         )
-    )
 
     LaunchedEffect(Unit) {
         delay(1000)
@@ -389,7 +397,7 @@ private fun BottomSheetScaffoldContent(navController: NavController) {
                             scaffoldState.bottomSheetState.hide()
                             navController.popBackStack()
                         }
-                    }
+                    },
                 ) {
                     Text("Hide Bottom Sheet")
                 }
@@ -399,7 +407,7 @@ private fun BottomSheetScaffoldContent(navController: NavController) {
                 value = text,
                 onValueChange = { text = it },
                 modifier = Modifier.padding(horizontal = 16.dp),
-                label = { Text("Text field") }
+                label = { Text("Text field") },
             )
             LazyColumn {
                 items(25) {
@@ -408,17 +416,18 @@ private fun BottomSheetScaffoldContent(navController: NavController) {
                         leadingContent = {
                             Icon(
                                 Icons.Default.Favorite,
-                                contentDescription = "Localized description"
+                                contentDescription = "Localized description",
                             )
                         },
-                        colors = ListItemDefaults.colors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                        ),
+                        colors =
+                            ListItemDefaults.colors(
+                                containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                            ),
                     )
                 }
             }
         },
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
     ) {
     }
 }

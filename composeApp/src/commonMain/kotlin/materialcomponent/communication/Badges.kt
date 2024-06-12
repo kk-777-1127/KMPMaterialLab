@@ -15,13 +15,11 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import materialcomponent.common.BorderBox
 
-fun LazyListScope.badges(
-    modifier: Modifier = Modifier,
-) {
+fun LazyListScope.badges(modifier: Modifier = Modifier) {
     item {
         BorderBox(
             modifier = modifier,
-            label = "badges"
+            label = "badges",
         ) {
             NavigationBarItemWithBadge()
         }
@@ -36,15 +34,16 @@ fun NavigationBarItemWithBadge() {
                 BadgedBox(
                     badge = {
                         Badge()
-                    }) {
+                    },
+                ) {
                     Icon(
                         Icons.Filled.Star,
-                        contentDescription = "Favorite"
+                        contentDescription = "Favorite",
                     )
                 }
             },
             selected = false,
-            onClick = {}
+            onClick = {},
         )
         NavigationBarItem(
             icon = {
@@ -54,20 +53,22 @@ fun NavigationBarItemWithBadge() {
                             val badgeNumber = "8"
                             Text(
                                 badgeNumber,
-                                modifier = Modifier.semantics {
-                                    contentDescription = "$badgeNumber new notifications"
-                                }
+                                modifier =
+                                    Modifier.semantics {
+                                        contentDescription = "$badgeNumber new notifications"
+                                    },
                             )
                         }
-                    }) {
+                    },
+                ) {
                     Icon(
                         Icons.Filled.Star,
-                        contentDescription = "Favorite"
+                        contentDescription = "Favorite",
                     )
                 }
             },
             selected = false,
-            onClick = {}
+            onClick = {},
         )
         NavigationBarItem(
             icon = {
@@ -77,20 +78,22 @@ fun NavigationBarItemWithBadge() {
                             val badgeNumber = "88"
                             Text(
                                 badgeNumber,
-                                modifier = Modifier.semantics {
-                                    contentDescription = "$badgeNumber new notifications"
-                                }
+                                modifier =
+                                    Modifier.semantics {
+                                        contentDescription = "$badgeNumber new notifications"
+                                    },
                             )
                         }
-                    }) {
+                    },
+                ) {
                     Icon(
                         Icons.Filled.Star,
-                        contentDescription = "Favorite"
+                        contentDescription = "Favorite",
                     )
                 }
             },
             selected = false,
-            onClick = {}
+            onClick = {},
         )
         NavigationBarItem(
             icon = {
@@ -100,20 +103,22 @@ fun NavigationBarItemWithBadge() {
                             val badgeNumber = "999+"
                             Text(
                                 badgeNumber,
-                                modifier = Modifier.semantics {
-                                    contentDescription = "$badgeNumber new notifications"
-                                }
+                                modifier =
+                                    Modifier.semantics {
+                                        contentDescription = "$badgeNumber new notifications"
+                                    },
                             )
                         }
-                    }) {
+                    },
+                ) {
                     Icon(
                         Icons.Filled.Star,
-                        contentDescription = "Favorite"
+                        contentDescription = "Favorite",
                     )
                 }
             },
             selected = false,
-            onClick = {}
+            onClick = {},
         )
     }
 }

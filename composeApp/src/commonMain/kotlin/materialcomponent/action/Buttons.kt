@@ -12,7 +12,6 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SmallFloatingActionButton
@@ -34,12 +33,12 @@ fun LazyListScope.buttons(
     item {
         BorderBox(
             modifier = modifier,
-            label = "Buttons"
+            label = "Buttons",
         ) {
             FlowRow(
                 modifier = Modifier.padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Button(onClick = { onClickButton("FilledButton") }) {
                     Text("FilledButton")
@@ -69,33 +68,33 @@ fun LazyListScope.fabs(
     item {
         BorderBox(
             modifier = modifier,
-            label = "FloatingActionButton"
+            label = "FloatingActionButton",
         ) {
             FlowRow(
                 modifier = Modifier.padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 FloatingActionButton(
-                    onClick = { onClickButton("FloatingActionButton") }
+                    onClick = { onClickButton("FloatingActionButton") },
                 ) { Icon(Icons.Filled.Add, "Localized description") }
 
                 SmallFloatingActionButton(
-                    onClick = { onClickButton("SmallFloatingActionButton") }
+                    onClick = { onClickButton("SmallFloatingActionButton") },
                 ) { Icon(Icons.Filled.Add, "Localized description") }
 
                 LargeFloatingActionButton(
-                    onClick = { onClickButton("LargeFloatingActionButton") }
+                    onClick = { onClickButton("LargeFloatingActionButton") },
                 ) { Icon(Icons.Filled.Add, "Localized description") }
 
                 ExtendedFloatingActionButton(
-                    onClick = { onClickButton("ExtendedFloatingActionButton") }
+                    onClick = { onClickButton("ExtendedFloatingActionButton") },
                 ) { Text(text = "Extended FAB") }
 
                 ExtendedFloatingActionButton(
                     onClick = { onClickButton("ExtendedFloatingActionButton with Icon") },
                     icon = { Icon(Icons.Filled.Add, "Localized description") },
-                    text = { Text(text = "Extended FAB") }
+                    text = { Text(text = "Extended FAB") },
                 )
 
                 AnimatedExtendedFloatingActionButton(onClickButton)
@@ -105,9 +104,7 @@ fun LazyListScope.fabs(
 }
 
 @Composable
-fun AnimatedExtendedFloatingActionButton(
-    onClickButton: (String) -> Unit,
-) {
+fun AnimatedExtendedFloatingActionButton(onClickButton: (String) -> Unit) {
     var expandedFab by remember { mutableStateOf(false) }
     ExtendedFloatingActionButton(
         onClick = {

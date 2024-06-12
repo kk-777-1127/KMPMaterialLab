@@ -13,25 +13,23 @@ import materialcomponent.AppScaffold
 import materialcomponent.SnackBarState
 
 @Composable
-fun CommunicationScreen(
-    navController: NavController
-) {
+fun CommunicationScreen(navController: NavController) {
     val snackBarState = remember { mutableStateOf<SnackBarState?>(null) }
     AppScaffold(
         title = "Communication",
         snackBarState = snackBarState.value,
-        onBack = { navController.popBackStack() }
+        onBack = { navController.popBackStack() },
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             badges()
             progressIndicators()
             snackBar(
                 onClickButton = {
                     snackBarState.value = SnackBarState("SnackBar ${(1..10).random()}", "action")
-                }
+                },
             )
             toolTips()
         }

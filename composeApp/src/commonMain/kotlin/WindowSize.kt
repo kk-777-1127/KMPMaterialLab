@@ -5,7 +5,8 @@ import androidx.compose.ui.unit.dp
 enum class WindowSize {
     COMPACT,
     MEDIUM,
-    EXPANDED;
+    EXPANDED,
+    ;
 
     companion object {
         fun basedOnWidth(windowWidth: Dp): WindowSize {

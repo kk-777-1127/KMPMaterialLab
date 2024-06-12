@@ -9,23 +9,22 @@ import materialcomponent.AppScaffold
 import materialcomponent.SnackBarState
 
 @Composable
-fun ContainmentScreen(
-    navController: NavController
-) {
+fun ContainmentScreen(navController: NavController) {
     val snackBarState = remember { mutableStateOf<SnackBarState?>(null) }
     AppScaffold(
         title = "Containment",
         snackBarState = snackBarState.value,
-        onBack = { navController.popBackStack() }
+        onBack = { navController.popBackStack() },
     ) {
         LazyColumn {
             bottomSheets(navController)
             cards(
                 onClickButton = { action ->
-                    snackBarState.value = SnackBarState(
-                        message = "Clicked $action"
-                    )
-                }
+                    snackBarState.value =
+                        SnackBarState(
+                            message = "Clicked $action",
+                        )
+                },
             )
             carousel()
             dialogs()

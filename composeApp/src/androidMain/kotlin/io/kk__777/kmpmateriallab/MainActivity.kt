@@ -15,12 +15,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val windowSize = when (currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass) {
-                MEDIUM -> WindowSize.MEDIUM
-                EXPANDED -> WindowSize.EXPANDED
-                COMPACT -> WindowSize.COMPACT
-                else -> WindowSize.COMPACT
-            }
+            val windowSize =
+                when (currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass) {
+                    MEDIUM -> WindowSize.MEDIUM
+                    EXPANDED -> WindowSize.EXPANDED
+                    COMPACT -> WindowSize.COMPACT
+                    else -> WindowSize.COMPACT
+                }
             App(windowSize)
         }
     }

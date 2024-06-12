@@ -1,10 +1,8 @@
 package materialcomponent.containment
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.ui.Modifier
-import materialcomponent.common.BorderBox
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.HorizontalDivider
@@ -12,7 +10,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import materialcomponent.common.BorderBox
 
 fun LazyListScope.listItem(
     modifier: Modifier = Modifier,
@@ -21,10 +21,10 @@ fun LazyListScope.listItem(
     item {
         BorderBox(
             modifier = modifier,
-            label = "ListItem"
+            label = "ListItem",
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Text("Oneline")
                 OneLineListItem()
@@ -49,7 +49,7 @@ fun OneLineListItem() {
                     Icons.Filled.Favorite,
                     contentDescription = "Localized description",
                 )
-            }
+            },
         )
         HorizontalDivider()
     }
@@ -67,7 +67,7 @@ fun TwoLineListItem() {
                     Icons.Filled.Favorite,
                     contentDescription = "Localized description",
                 )
-            }
+            },
         )
         HorizontalDivider()
     }
@@ -86,7 +86,7 @@ fun ThreeLineListItemWithOverlineAndSupporting() {
                     contentDescription = "Localized description",
                 )
             },
-            trailingContent = { Text("meta") }
+            trailingContent = { Text("meta") },
         )
         HorizontalDivider()
     }
@@ -106,7 +106,7 @@ fun ThreeLineListItemWithExtendedSupporting() {
                     contentDescription = "Localized description",
                 )
             },
-            trailingContent = { Text("meta") }
+            trailingContent = { Text("meta") },
         )
         HorizontalDivider()
     }

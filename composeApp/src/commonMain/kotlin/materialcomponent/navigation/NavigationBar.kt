@@ -38,14 +38,14 @@ fun LazyListScope.navigationBarOrRail(
 ) {
     item {
         BorderBox(
-            label = "NavigationBar"
+            label = "NavigationBar",
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 NavigationBarSample()
                 NavigationBarWithOnlySelectedLabelsSample()
-                Button(onClick = { navController.navigate(Navigation.NavigationBarScreens.NavigationRails().root)}) {
+                Button(onClick = { navController.navigate(Navigation.NavigationBarScreens.NavigationRails().root) }) {
                     Text("Navigation Rails")
                 }
             }
@@ -64,7 +64,7 @@ fun NavigationBarSample() {
                 icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
                 label = { Text(item) },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index }
+                onClick = { selectedItem = index },
             )
         }
     }
@@ -82,7 +82,7 @@ fun NavigationBarWithOnlySelectedLabelsSample() {
                 label = { Text(item) },
                 selected = selectedItem == index,
                 onClick = { selectedItem = index },
-                alwaysShowLabel = false
+                alwaysShowLabel = false,
             )
         }
     }
@@ -91,20 +91,20 @@ fun NavigationBarWithOnlySelectedLabelsSample() {
 @Composable
 fun NavigationRailScreen(
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val snackBarState = remember { mutableStateOf<SnackBarState?>(null) }
     val onClick: (String) -> Unit = { message ->
-        snackBarState.value = SnackBarState(message = message )
+        snackBarState.value = SnackBarState(message = message)
     }
     AppScaffold(
         title = "Navigation",
         snackBarState = snackBarState.value,
-        onBack = { navController.popBackStack() }
+        onBack = { navController.popBackStack() },
     ) {
         LazyRow(
             modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item { NavigationRailSample() }
             item { NavigationRailWithOnlySelectedLabelsSample() }
@@ -124,7 +124,7 @@ fun NavigationRailSample() {
                 icon = { Icon(icons[index], contentDescription = item) },
                 label = { Text(item) },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index }
+                onClick = { selectedItem = index },
             )
         }
     }
@@ -142,7 +142,7 @@ fun NavigationRailWithOnlySelectedLabelsSample() {
                 label = { Text(item) },
                 selected = selectedItem == index,
                 onClick = { selectedItem = index },
-                alwaysShowLabel = false
+                alwaysShowLabel = false,
             )
         }
     }
@@ -163,7 +163,7 @@ fun NavigationRailBottomAlignSample() {
                 label = { Text(item) },
                 selected = selectedItem == index,
                 onClick = { selectedItem = index },
-                alwaysShowLabel = false
+                alwaysShowLabel = false,
             )
         }
     }

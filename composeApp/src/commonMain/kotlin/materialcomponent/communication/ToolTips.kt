@@ -29,18 +29,16 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import materialcomponent.common.BorderBox
 
-fun LazyListScope.toolTips(
-    modifier: Modifier = Modifier,
-) {
+fun LazyListScope.toolTips(modifier: Modifier = Modifier) {
     item {
         BorderBox(
             modifier = modifier,
-            label = "toolTips"
+            label = "toolTips",
         ) {
             FlowRow(
                 modifier = Modifier.padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 PlainTooltipSample()
                 PlainTooltipWithManualInvocationSample()
@@ -62,18 +60,18 @@ fun PlainTooltipSample() {
                 Text("Add to favorites")
             }
         },
-        state = state
+        state = state,
     ) {
         IconButton(
             onClick = {
                 scope.launch {
                     state.show()
                 }
-            }
+            },
         ) {
             Icon(
                 imageVector = Icons.Filled.Favorite,
-                contentDescription = "Localized Description"
+                contentDescription = "Localized Description",
             )
         }
     }
@@ -84,7 +82,7 @@ fun PlainTooltipWithManualInvocationSample() {
     val tooltipState = rememberTooltipState()
     val scope = rememberCoroutineScope()
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TooltipBox(
             positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
@@ -93,16 +91,16 @@ fun PlainTooltipWithManualInvocationSample() {
                     Text("Add to list")
                 }
             },
-            state = tooltipState
+            state = tooltipState,
         ) {
             Icon(
                 imageVector = Icons.Filled.AddCircle,
-                contentDescription = "Localized Description"
+                contentDescription = "Localized Description",
             )
         }
         Spacer(Modifier.requiredHeight(30.dp))
         OutlinedButton(
-            onClick = { scope.launch { tooltipState.show() } }
+            onClick = { scope.launch { tooltipState.show() } },
         ) {
             Text("Display tooltip")
         }
@@ -120,25 +118,25 @@ fun RichTooltipSample() {
                 title = { Text(richTooltipSubheadText) },
                 action = {
                     TextButton(
-                        onClick = { scope.launch { tooltipState.dismiss() } }
+                        onClick = { scope.launch { tooltipState.dismiss() } },
                     ) { Text(richTooltipActionText) }
-                }
+                },
             ) {
                 Text(richTooltipText)
             }
         },
-        state = tooltipState
+        state = tooltipState,
     ) {
         IconButton(
             onClick = {
                 scope.launch {
                     tooltipState.show()
                 }
-            }
+            },
         ) {
             Icon(
                 imageVector = Icons.Filled.Info,
-                contentDescription = "Localized Description"
+                contentDescription = "Localized Description",
             )
         }
     }
@@ -149,7 +147,7 @@ fun RichTooltipWithManualInvocationSample() {
     val tooltipState = rememberTooltipState(isPersistent = true)
     val scope = rememberCoroutineScope()
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TooltipBox(
             positionProvider = TooltipDefaults.rememberRichTooltipPositionProvider(),
@@ -162,21 +160,21 @@ fun RichTooltipWithManualInvocationSample() {
                                 scope.launch {
                                     tooltipState.dismiss()
                                 }
-                            }
+                            },
                         ) { Text(richTooltipActionText) }
-                    }
+                    },
                 ) { Text(richTooltipText) }
             },
-            state = tooltipState
+            state = tooltipState,
         ) {
             Icon(
                 imageVector = Icons.Filled.Info,
-                contentDescription = "Localized Description"
+                contentDescription = "Localized Description",
             )
         }
         Spacer(Modifier.requiredHeight(30.dp))
         OutlinedButton(
-            onClick = { scope.launch { tooltipState.show() } }
+            onClick = { scope.launch { tooltipState.show() } },
         ) {
             Text("Display tooltip")
         }
@@ -186,6 +184,6 @@ fun RichTooltipWithManualInvocationSample() {
 const val richTooltipSubheadText = "Permissions"
 const val richTooltipText =
     "Configure permissions for selected service accounts. " +
-            "You can add and remove service account members and assign roles to them. " +
-            "Visit go/permissions for details"
+        "You can add and remove service account members and assign roles to them. " +
+        "Visit go/permissions for details"
 const val richTooltipActionText = "Request Access"

@@ -9,18 +9,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun LabelBox(
     label: String,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(label)
         content()
@@ -31,16 +30,18 @@ fun LabelBox(
 fun BorderBox(
     modifier: Modifier = Modifier,
     label: String? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(
-        modifier = modifier
-            .padding(8.dp)
+        modifier =
+            modifier
+                .padding(8.dp),
     ) {
         label?.let { Text(it) }
         Box(
-            modifier = modifier
-                .border(1.dp, MaterialTheme.colorScheme.outline)
+            modifier =
+                modifier
+                    .border(1.dp, MaterialTheme.colorScheme.outline),
         ) {
             content()
         }

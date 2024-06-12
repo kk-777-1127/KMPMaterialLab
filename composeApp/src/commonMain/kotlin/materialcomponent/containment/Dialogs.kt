@@ -46,7 +46,7 @@ fun LazyListScope.dialogs(
         }
         BorderBox(
             modifier = modifier,
-            label = "Dialog"
+            label = "Dialog",
         ) {
             FlowRow {
                 Button(onClick = { open(0) }) {
@@ -67,7 +67,10 @@ fun LazyListScope.dialogs(
 }
 
 @Composable
-fun AlertDialogSample(open: Boolean, close: () -> Unit) {
+fun AlertDialogSample(
+    open: Boolean,
+    close: () -> Unit,
+) {
     if (open) {
         AlertDialog(
             onDismissRequest = close,
@@ -79,24 +82,27 @@ fun AlertDialogSample(open: Boolean, close: () -> Unit) {
             },
             confirmButton = {
                 TextButton(
-                    onClick = close
+                    onClick = close,
                 ) {
                     Text("Confirm")
                 }
             },
             dismissButton = {
                 TextButton(
-                    onClick = close
+                    onClick = close,
                 ) {
                     Text("Dismiss")
                 }
-            }
+            },
         )
     }
 }
 
 @Composable
-fun AlertDialogWithIconSample(open: Boolean, close: () -> Unit) {
+fun AlertDialogWithIconSample(
+    open: Boolean,
+    close: () -> Unit,
+) {
     if (open) {
         AlertDialog(
             onDismissRequest = close,
@@ -107,51 +113,55 @@ fun AlertDialogWithIconSample(open: Boolean, close: () -> Unit) {
             text = {
                 Text(
                     "This area typically contains the supportive text " +
-                            "which presents the details regarding the Dialog's purpose."
+                        "which presents the details regarding the Dialog's purpose.",
                 )
             },
             confirmButton = {
                 TextButton(
-                    onClick = close
+                    onClick = close,
                 ) {
                     Text("Confirm")
                 }
             },
             dismissButton = {
                 TextButton(
-                    onClick = close
+                    onClick = close,
                 ) {
                     Text("Dismiss")
                 }
-            }
+            },
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BasicAlertDialogSample(open: Boolean, close: () -> Unit) {
-
+fun BasicAlertDialogSample(
+    open: Boolean,
+    close: () -> Unit,
+) {
     if (open) {
         BasicAlertDialog(
-            onDismissRequest = close
+            onDismissRequest = close,
         ) {
             Surface(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .wrapContentHeight(),
+                modifier =
+                    Modifier
+                        .wrapContentWidth()
+                        .wrapContentHeight(),
                 shape = MaterialTheme.shapes.large,
-                tonalElevation = AlertDialogDefaults.TonalElevation
+                tonalElevation = AlertDialogDefaults.TonalElevation,
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "This area typically contains the supportive text " +
+                        text =
+                            "This area typically contains the supportive text " +
                                 "which presents the details regarding the Dialog's purpose.",
                     )
                     Spacer(modifier = Modifier.height(24.dp))
                     TextButton(
                         onClick = close,
-                        modifier = Modifier.align(Alignment.End)
+                        modifier = Modifier.align(Alignment.End),
                     ) {
                         Text("Confirm")
                     }

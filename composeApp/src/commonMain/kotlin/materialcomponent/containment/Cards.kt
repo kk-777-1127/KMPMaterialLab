@@ -24,12 +24,12 @@ fun LazyListScope.cards(
     item {
         BorderBox(
             modifier = modifier,
-            label = "Buttons"
+            label = "Buttons",
         ) {
             FlowRow(
                 modifier = Modifier.padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 CardSample()
                 ClickableCardSample { onClickButton("ClickableCardSample") }
@@ -51,12 +51,11 @@ fun CardSample() {
     }
 }
 
-
 @Composable
 fun ClickableCardSample(onClickButton: () -> Unit) {
     Card(
         onClick = onClickButton,
-        modifier = Modifier.size(width = 180.dp, height = 100.dp)
+        modifier = Modifier.size(width = 180.dp, height = 100.dp),
     ) {
         Box(Modifier.fillMaxSize()) {
             Text("Clickable", Modifier.align(Alignment.Center))
@@ -77,7 +76,7 @@ fun ElevatedCardSample() {
 fun ClickableElevatedCardSample(onClickButton: () -> Unit) {
     ElevatedCard(
         onClick = onClickButton,
-        modifier = Modifier.size(width = 180.dp, height = 100.dp)
+        modifier = Modifier.size(width = 180.dp, height = 100.dp),
     ) {
         Box(Modifier.fillMaxSize()) {
             Text("Clickable", Modifier.align(Alignment.Center))
@@ -98,7 +97,7 @@ fun OutlinedCardSample() {
 fun ClickableOutlinedCardSample(onClickButton: () -> Unit) {
     OutlinedCard(
         onClick = onClickButton,
-        modifier = Modifier.size(width = 180.dp, height = 100.dp)
+        modifier = Modifier.size(width = 180.dp, height = 100.dp),
     ) {
         Box(Modifier.fillMaxSize()) {
             Text("Clickable", Modifier.align(Alignment.Center))

@@ -34,12 +34,12 @@ fun LazyListScope.iconButtons(
     item {
         BorderBox(
             modifier = modifier,
-            label = "IconButtons"
+            label = "IconButtons",
         ) {
             FlowRow(
                 modifier = Modifier.padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 IconButton(onClick = { onClickButton("IconButton") }) {
                     Icon(Icons.Outlined.Lock, contentDescription = "Localized description")
@@ -48,18 +48,18 @@ fun LazyListScope.iconButtons(
                     Icon(
                         painter = rememberVectorPainter(image = Icons.Outlined.Lock),
                         contentDescription = "Localized description",
-                        tint = Color.Red
+                        tint = Color.Red,
                     )
                 }
                 IconToggleButtonSample(onClickButton = { onClickButton("IconToggleButton") })
                 FilledIconButton(onClick = { onClickButton("FilledIconButton") }) {
                     Icon(Icons.Outlined.Lock, contentDescription = "Localized description")
                 }
-                FilledIconToggleButtonSample(onClickButton = { onClickButton("FilledIconToggleButton") } )
+                FilledIconToggleButtonSample(onClickButton = { onClickButton("FilledIconToggleButton") })
                 FilledTonalIconButton(onClick = { onClickButton("FilledTonalIconButton") }) {
                     Icon(Icons.Outlined.Lock, contentDescription = "Localized description")
                 }
-                FilledTonalIconToggleButtonSample(onClickButton = { onClickButton("FilledTonalIconToggleButton") } )
+                FilledTonalIconToggleButtonSample(onClickButton = { onClickButton("FilledTonalIconToggleButton") })
                 OutlinedIconButton(onClick = { onClickButton("OutlinedIconButton") }) {
                     Icon(Icons.Outlined.Lock, contentDescription = "Localized description")
                 }

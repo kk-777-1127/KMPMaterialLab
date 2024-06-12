@@ -9,21 +9,20 @@ import materialcomponent.AppScaffold
 import materialcomponent.SnackBarState
 
 @Composable
-fun NavigationScreen(
-    navController: NavController
-) {
+fun NavigationScreen(navController: NavController) {
     val snackBarState = remember { mutableStateOf<SnackBarState?>(null) }
     val onClick: (String) -> Unit = { message ->
-        snackBarState.value = SnackBarState(message = message )
+        snackBarState.value = SnackBarState(message = message)
     }
     AppScaffold(
         title = "Navigation",
         snackBarState = snackBarState.value,
-        onBack = { navController.popBackStack() }
+        onBack = { navController.popBackStack() },
     ) {
         LazyColumn {
             bottomAppBar(onClick, navController)
             navigationBarOrRail(onClick, navController)
+            drawers(onClick, navController)
         }
     }
 }

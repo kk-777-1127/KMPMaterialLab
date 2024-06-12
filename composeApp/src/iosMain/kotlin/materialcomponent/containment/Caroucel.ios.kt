@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 @Composable
 actual fun HorizontalMultiBrowseCarouselContent(
     items: List<CarouselItem>,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Text("Not Supported on iOS")
 }
@@ -15,7 +15,7 @@ actual fun HorizontalMultiBrowseCarouselContent(
 @Composable
 actual fun FadingHorizontalMultiBrowseCarouselSample(
     items: List<CarouselItem>,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Text("Not Supported on iOS")
 }
@@ -23,7 +23,7 @@ actual fun FadingHorizontalMultiBrowseCarouselSample(
 @Composable
 actual fun HorizontalUncontainedCarouselSample(
     items: List<CarouselItem>,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Text("Not Supported on iOS")
 }

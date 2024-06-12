@@ -1,9 +1,7 @@
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -20,35 +18,33 @@ import materialcomponent.action.iconButtons
 import materialcomponent.action.segmentedButtons
 
 @Composable
-fun ActionScreen(
-    navController: NavController
-) {
+fun ActionScreen(navController: NavController) {
     val snackBarState = remember { mutableStateOf<SnackBarState?>(null) }
     AppScaffold(
         title = "Action",
         snackBarState = snackBarState.value,
-        onBack = { navController.popBackStack() }
+        onBack = { navController.popBackStack() },
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             buttons(
                 onClickButton = {
                     snackBarState.value = SnackBarState("$it clicked")
-                }
+                },
             )
 
             fabs(
                 onClickButton = {
                     snackBarState.value = SnackBarState("$it clicked")
-                }
+                },
             )
 
             iconButtons(
                 onClickButton = {
                     snackBarState.value = SnackBarState("$it clicked")
-                }
+                },
             )
 
             segmentedButtons()
