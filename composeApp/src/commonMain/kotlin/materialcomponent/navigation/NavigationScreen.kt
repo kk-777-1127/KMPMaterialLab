@@ -23,6 +23,7 @@ fun NavigationScreen(navController: NavController) {
             bottomAppBar(onClick, navController)
             navigationBarOrRail(onClick, navController)
             drawers(onClick, navController)
+            tabs(onClick, navController)
         }
     }
 }
